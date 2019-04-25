@@ -11,13 +11,14 @@ RUN dpkg --add-architecture i386 \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
         supervisor \
+        haproxy \
         winehq-stable \
         xvfb \
     && rm -rf /var/lib/apt/lists/* \
     && WINEPREFIX=/app winecfg \
     && useradd -ms /bin/bash farmer
 
-COPY files/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY files/supervisord.conf /etc/supervisor/supervisord.conf
 COPY files/haproxy.cfg /etc/haproxy/haproxy.cfg
 COPY files/run-farming-simulator.sh /usr/local/bin/run-farming-simulator
 
