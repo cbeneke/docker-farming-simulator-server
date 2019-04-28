@@ -27,7 +27,7 @@ RUN dpkg --add-architecture i386 \
 USER farmer
 ENV WINEPREFIX=/app
 RUN winecfg \
-    && winetricks dlls dotnet462 \
+    && winetricks dlls dotnet461 \
     && winetricks settings win10
 USER root
 
