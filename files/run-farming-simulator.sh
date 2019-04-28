@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Add wine-staging bin to PATH
+export PATH="/opt/wine-staging/bin:$PATH"
+
 # Start fake X
 export DISPLAY=:0
 /usr/bin/Xvfb $DISPLAY -ac &

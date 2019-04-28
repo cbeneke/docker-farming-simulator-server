@@ -10,15 +10,17 @@ RUN dpkg --add-architecture i386 \
     && curl -fsSL https://dl.winehq.org/wine-builds/winehq.key | apt-key add - \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
-        supervisor \
         haproxy \
+        openssh-server \
+        supervisor \
         xvfb \
     && apt-get install -y \
-        winehq-stable \
+        winehq-staging \
         winbind \
     && rm -rf /var/lib/apt/lists/* \
-    && WINEPREFIX=/app winecfg \
-    && useradd -ms /bin/bash farmer
+    && WINEPREFIX=/app /opt/wine-staging/bin/winecfg \
+    && echo 'X11UseLocalhost no' >> /etc/ssh/sshd_config \
+    && mkdir /run/sshd
 
 COPY files/supervisord.conf /etc/supervisor/supervisord.conf
 COPY files/haproxy.cfg /etc/haproxy/haproxy.cfg
