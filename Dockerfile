@@ -13,14 +13,21 @@ RUN dpkg --add-architecture i386 \
         haproxy \
         openssh-server \
         supervisor \
-        xvfb \
-    && apt-get install -y \
-        winehq-staging \
         winbind \
+        winehq-stable \
+        winetricks \
+        xvfb \
     && rm -rf /var/lib/apt/lists/* \
-    && WINEPREFIX=/app /opt/wine-staging/bin/winecfg \
     && echo 'X11UseLocalhost no' >> /etc/ssh/sshd_config \
-    && mkdir /run/sshd
+    && mkdir /run/sshd \
+    && useradd -ms /bin/bash farmer
+
+USER farmer
+ENV WINEPREFIX=/app
+RUN winecfg \
+    && winetricks dlls dotnet462 \
+    && winetricks settings win10
+USER root
 
 COPY files/supervisord.conf /etc/supervisor/supervisord.conf
 COPY files/haproxy.cfg /etc/haproxy/haproxy.cfg
