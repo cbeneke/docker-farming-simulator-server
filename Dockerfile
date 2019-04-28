@@ -12,8 +12,10 @@ RUN dpkg --add-architecture i386 \
     && apt-get install -y --no-install-recommends \
         supervisor \
         haproxy \
-        winehq-stable \
         xvfb \
+    && apt-get install -y \
+        winehq-stable \
+        winbind \
     && rm -rf /var/lib/apt/lists/* \
     && WINEPREFIX=/app winecfg \
     && useradd -ms /bin/bash farmer
