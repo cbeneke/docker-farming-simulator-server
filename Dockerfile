@@ -20,7 +20,9 @@ RUN dpkg --add-architecture i386 \
     && rm -rf /var/lib/apt/lists/* \
     && echo 'X11UseLocalhost no' >> /etc/ssh/sshd_config \
     && mkdir /run/sshd \
-    && useradd -ms /bin/bash farmer
+    && useradd -ms /bin/bash farmer \
+    && mkdir /app \
+    && chown farmer:farmer /app
 
 USER farmer
 ENV WINEPREFIX=/app
